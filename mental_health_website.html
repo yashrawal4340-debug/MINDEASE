@@ -1,0 +1,1794 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MindSpace — Mental Health Awareness</title>
+  <style>
+    /* ===== RESET & BASE ===== */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --primary: #5B8DB8;
+      --primary-light: #EBF3FB;
+      --primary-dark: #3A6A94;
+      --accent: #6DBF8E;
+      --accent-light: #EAF7EF;
+      --accent-dark: #3E8A5F;
+      --warm: #F9C784;
+      --warm-light: #FEF6E4;
+      --soft-red: #F4A5A5;
+      --soft-red-light: #FEF0F0;
+      --bg: #F5F8FF;
+      --surface: #FFFFFF;
+      --surface-2: #F0F4FC;
+      --text: #2D3748;
+      --text-muted: #718096;
+      --text-light: #A0AEC0;
+      --border: #E2E8F0;
+      --shadow: 0 4px 20px rgba(91, 141, 184, 0.10);
+      --shadow-sm: 0 2px 8px rgba(91, 141, 184, 0.08);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --radius-xs: 6px;
+      --transition: 0.25s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary-light);
+      border-radius: 99px;
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .navbar-brand {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .brand-icon {
+      font-size: 1.4rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 4px;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      padding: 6px 14px;
+      border-radius: 99px;
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      font-weight: 500;
+      transition: all var(--transition);
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .nav-emergency {
+      background: var(--soft-red-light) !important;
+      color: #C53030 !important;
+    }
+
+    .hamburger {
+      display: none;
+      cursor: pointer;
+      font-size: 1.4rem;
+      color: var(--text);
+    }
+
+    /* ===== SECTIONS ===== */
+    .section {
+      display: none;
+      min-height: calc(100vh - 64px);
+      padding: 3rem 2rem;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    /* ===== ONBOARDING ===== */
+    .hero-banner {
+      text-align: center;
+      padding: 3rem 2rem 2rem;
+      background: linear-gradient(135deg, #EBF3FB 0%, #EAF7EF 100%);
+      border-radius: var(--radius);
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-emoji {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero-banner h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-banner p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 1.2rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.4rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 1rem;
+      color: var(--text);
+      background: var(--surface-2);
+      transition: border-color var(--transition), box-shadow var(--transition);
+      outline: none;
+      font-family: inherit;
+    }
+
+    .form-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(91, 141, 184, 0.15);
+      background: white;
+    }
+
+    .form-select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23718096' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 28px;
+      border-radius: 99px;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: inherit;
+      transition: all var(--transition);
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(91, 141, 184, 0.3);
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-accent:hover {
+      background: var(--accent-dark);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: white;
+      color: var(--primary);
+      border: 1.5px solid var(--primary);
+    }
+
+    .btn-outline:hover {
+      background: var(--primary-light);
+    }
+
+    .btn-danger {
+      background: #C53030;
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background: #9B2C2C;
+    }
+
+    .btn-sm {
+      padding: 8px 18px;
+      font-size: 0.88rem;
+    }
+
+    .btn-full {
+      width: 100%;
+    }
+
+    .privacy-note {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent-light);
+      border-radius: var(--radius-xs);
+      padding: 10px 14px;
+      font-size: 0.85rem;
+      color: #276749;
+      margin-top: 1rem;
+    }
+
+    /* ===== QUIZ ===== */
+    .progress-bar-wrap {
+      background: var(--border);
+      border-radius: 99px;
+      height: 8px;
+      margin-bottom: 2rem;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      border-radius: 99px;
+      transition: width 0.4s ease;
+    }
+
+    .quiz-q-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .quiz-question {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+
+    .options-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .option-btn {
+      background: var(--surface-2);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px 18px;
+      text-align: left;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-family: inherit;
+      color: var(--text);
+      transition: all var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .option-btn:hover {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .option-btn.selected {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      font-weight: 600;
+    }
+
+    .option-bullet {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid currentColor;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+    }
+
+    .option-btn.selected .option-bullet::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+
+    .quiz-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1.5rem;
+    }
+
+    .q-counter {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* Quiz Result */
+    .result-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 2.5rem;
+      text-align: center;
+    }
+
+    .result-emoji {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+    }
+
+    .result-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .result-desc {
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .result-score-badge {
+      display: inline-block;
+      padding: 8px 20px;
+      border-radius: 99px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .badge-good {
+      background: var(--accent-light);
+      color: var(--accent-dark);
+    }
+
+    .badge-moderate {
+      background: var(--warm-light);
+      color: #8A5E0A;
+    }
+
+    .badge-concern {
+      background: var(--soft-red-light);
+      color: #C53030;
+    }
+
+    .result-disclaimer {
+      background: var(--surface-2);
+      border-left: 3px solid var(--warm);
+      border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
+      padding: 12px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-align: left;
+      margin-top: 1.5rem;
+    }
+
+    /* ===== CHATBOT ===== */
+    .chat-wrap {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      height: 520px;
+      overflow: hidden;
+    }
+
+    .chat-header {
+      background: var(--primary);
+      color: white;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .chat-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .chat-header-info h3 {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .chat-header-info p {
+      font-size: 0.8rem;
+      opacity: 0.8;
+    }
+
+    .chat-online-dot {
+      width: 8px;
+      height: 8px;
+      background: #68D391;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 4px;
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .msg {
+      max-width: 78%;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .msg.bot {
+      align-self: flex-start;
+    }
+
+    .msg.user {
+      align-self: flex-end;
+    }
+
+    .msg-bubble {
+      padding: 10px 14px;
+      border-radius: 16px;
+      font-size: 0.93rem;
+      line-height: 1.5;
+    }
+
+    .msg.bot .msg-bubble {
+      background: var(--surface-2);
+      color: var(--text);
+      border-bottom-left-radius: 4px;
+    }
+
+    .msg.user .msg-bubble {
+      background: var(--primary);
+      color: white;
+      border-bottom-right-radius: 4px;
+    }
+
+    .msg-time {
+      font-size: 0.72rem;
+      color: var(--text-light);
+      padding: 0 4px;
+    }
+
+    .msg.user .msg-time {
+      text-align: right;
+    }
+
+    .typing-indicator {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      padding: 10px 14px;
+      background: var(--surface-2);
+      border-radius: 16px;
+      border-bottom-left-radius: 4px;
+      width: fit-content;
+    }
+
+    .typing-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--text-light);
+      animation: typingBounce 1.2s infinite;
+    }
+
+    .typing-dot:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .typing-dot:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes typingBounce {
+
+      0%,
+      60%,
+      100% {
+        transform: translateY(0);
+      }
+
+      30% {
+        transform: translateY(-6px);
+      }
+    }
+
+    .chat-input-area {
+      padding: 1rem 1.2rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 10px;
+    }
+
+    .chat-input {
+      flex: 1;
+      padding: 10px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 99px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      outline: none;
+      color: var(--text);
+      background: var(--surface-2);
+      transition: border-color var(--transition);
+    }
+
+    .chat-input:focus {
+      border-color: var(--primary);
+    }
+
+    .chat-send {
+      background: var(--primary);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      color: white;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background var(--transition);
+    }
+
+    .chat-send:hover {
+      background: var(--primary-dark);
+    }
+
+    .chat-disclaimer {
+      font-size: 0.8rem;
+      color: var(--text-light);
+      text-align: center;
+      padding: 0.5rem 1rem 0;
+    }
+
+    /* ===== THERAPISTS ===== */
+    .therapist-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .therapist-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      padding: 1.5rem;
+      transition: transform var(--transition), box-shadow var(--transition);
+      border: 1.5px solid var(--border);
+    }
+
+    .therapist-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+    }
+
+    .therapist-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      margin: 0 auto 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: white;
+    }
+
+    .therapist-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 4px;
+    }
+
+    .therapist-spec {
+      font-size: 0.85rem;
+      color: var(--primary);
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+
+    .therapist-exp {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-bottom: 6px;
+    }
+
+    .therapist-rating {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--warm);
+      margin-bottom: 1rem;
+    }
+
+    .therapist-btns {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .find-center-card {
+      background: linear-gradient(135deg, var(--primary-light), var(--accent-light));
+      border-radius: var(--radius);
+      padding: 2rem;
+      text-align: center;
+      margin-top: 2rem;
+      border: 1.5px dashed var(--primary);
+    }
+
+    .find-center-card h3 {
+      color: var(--primary-dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .find-center-card p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 1.2rem;
+    }
+
+    /* ===== MOOD TRACKER ===== */
+    .mood-tracker-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .mood-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 1.5rem 0;
+    }
+
+    .mood-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 1rem 1.5rem;
+      border-radius: var(--radius);
+      border: 2px solid var(--border);
+      background: var(--surface-2);
+      cursor: pointer;
+      transition: all var(--transition);
+      min-width: 100px;
+      font-family: inherit;
+    }
+
+    .mood-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .mood-btn.happy:hover,
+    .mood-btn.happy.selected {
+      border-color: #68D391;
+      background: #F0FFF4;
+    }
+
+    .mood-btn.neutral:hover,
+    .mood-btn.neutral.selected {
+      border-color: var(--warm);
+      background: var(--warm-light);
+    }
+
+    .mood-btn.sad:hover,
+    .mood-btn.sad.selected {
+      border-color: var(--soft-red);
+      background: var(--soft-red-light);
+    }
+
+    .mood-emoji {
+      font-size: 2rem;
+    }
+
+    .mood-label {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .mood-history {
+      margin-top: 1rem;
+    }
+
+    .mood-history-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.8rem;
+    }
+
+    .mood-dots {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .mood-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+    }
+
+    /* ===== SELF HELP ===== */
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .tip-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      padding: 1.5rem;
+      border-top: 4px solid var(--primary);
+      transition: transform var(--transition);
+    }
+
+    .tip-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .tip-card:nth-child(2) {
+      border-top-color: var(--accent);
+    }
+
+    .tip-card:nth-child(3) {
+      border-top-color: var(--warm);
+    }
+
+    .tip-icon {
+      font-size: 2rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .tip-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+    }
+
+    .tip-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    /* Breathing Animation */
+    .breathing-circle {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      border: 3px solid var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 1rem auto;
+      cursor: pointer;
+      transition: transform 0.1s;
+      color: var(--primary);
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    .breathing-circle.inhale {
+      animation: breatheIn 4s ease-in-out forwards;
+    }
+
+    .breathing-circle.exhale {
+      animation: breatheOut 4s ease-in-out forwards;
+    }
+
+    .breathing-circle.hold {
+      animation: none;
+      border-color: var(--accent);
+      background: var(--accent-light);
+      color: var(--accent-dark);
+    }
+
+    @keyframes breatheIn {
+      0% {
+        transform: scale(1);
+      }
+
+      100% {
+        transform: scale(1.45);
+      }
+    }
+
+    @keyframes breatheOut {
+      0% {
+        transform: scale(1.45);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    /* ===== EMERGENCY ===== */
+    .emergency-hero {
+      background: linear-gradient(135deg, #FED7D7, #FEB2B2);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      border: 2px solid #FC8181;
+    }
+
+    .emergency-hero h2 {
+      color: #9B2C2C;
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .emergency-hero p {
+      color: #C53030;
+      margin-bottom: 1.5rem;
+    }
+
+    .helpline-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .helpline-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 1.2rem 1.5rem;
+      border-left: 4px solid var(--primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .helpline-name {
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .helpline-number {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .helpline-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .crisis-tips {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .crisis-tips h3 {
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+
+    .crisis-tip-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      margin-bottom: 10px;
+      font-size: 0.93rem;
+    }
+
+    .crisis-tip-num {
+      background: var(--primary-light);
+      color: var(--primary);
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.8rem;
+      flex-shrink: 0;
+    }
+
+    /* ===== SECTION HEADER ===== */
+    .section-header {
+      margin-bottom: 2rem;
+    }
+
+    .section-header h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+
+    .section-header p {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    /* ===== PAGE TRANSITIONS ===== */
+    .fade-in {
+      animation: fadeInUp 0.4s ease forwards;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ===== TOAST ===== */
+    .toast {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 999;
+      background: var(--text);
+      color: white;
+      padding: 12px 20px;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      animation: slideInRight 0.3s ease;
+      display: none;
+    }
+
+    @keyframes slideInRight {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 640px) {
+      .navbar {
+        padding: 0 1rem;
+      }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: white;
+        flex-direction: column;
+        padding: 1rem;
+        border-bottom: 1px solid var(--border);
+        gap: 4px;
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .hamburger {
+        display: block;
+      }
+
+      .section {
+        padding: 1.5rem 1rem;
+      }
+
+      .hero-banner {
+        padding: 2rem 1rem 1.5rem;
+      }
+
+      .hero-banner h1 {
+        font-size: 1.5rem;
+      }
+
+      .mood-buttons {
+        gap: 0.6rem;
+      }
+
+      .mood-btn {
+        min-width: 80px;
+        padding: 0.8rem 1rem;
+      }
+
+      .quiz-nav {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .quiz-nav .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar" id="navbar">
+    <a class="navbar-brand" href="#" onclick="navigate('home'); return false;">
+      <span class="brand-icon">🌿</span> MindSpace
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#" onclick="navigate('home'); return false;" data-page="home">Home</a></li>
+      <li><a href="#" onclick="navigate('quiz'); return false;" data-page="quiz">Assessment</a></li>
+      <li><a href="#" onclick="navigate('chat'); return false;" data-page="chat">Chat Support</a></li>
+      <li><a href="#" onclick="navigate('therapists'); return false;" data-page="therapists">Therapists</a></li>
+      <li><a href="#" onclick="navigate('wellness'); return false;" data-page="wellness">Wellness</a></li>
+      <li><a href="#" onclick="navigate('emergency'); return false;" data-page="emergency" class="nav-emergency">🆘
+          Help</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()">☰</div>
+  </nav>
+
+  <!-- ===== SECTION: HOME / ONBOARDING ===== -->
+  <section class="section active fade-in" id="page-home">
+    <div class="hero-banner">
+      <div class="hero-emoji">🌱</div>
+      <h1>Welcome to MindSpace</h1>
+      <p>A safe, calm space to check in with yourself. You are not alone, and it's okay to ask for help.</p>
+    </div>
+
+    <div class="card">
+      <p class="card-title">✨ Let's get to know you a little</p>
+      <div class="form-group">
+        <label class="form-label" for="age">Your Age</label>
+        <input class="form-input" type="number" id="age" placeholder="e.g. 24" min="10" max="100" />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="gender">Gender</label>
+        <select class="form-input form-select" id="gender">
+          <option value="">Select gender</option>
+          <option>Male</option>
+          <option>Female</option>
+          <option>Other</option>
+          <option>Prefer not to say</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="profession">Profession / Student Field</label>
+        <input class="form-input" type="text" id="profession" placeholder="e.g. Software Engineer, Student…" />
+      </div>
+      <button class="btn btn-primary btn-full" onclick="submitOnboarding()">
+        Continue &rarr;
+      </button>
+      <div class="privacy-note">
+        🔒 आपका डेटा सुरक्षित है। Your information stays on your device and will never be shared.
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION: QUIZ ===== -->
+  <section class="section" id="page-quiz">
+    <div class="section-header">
+      <h2>🧠 Mental Health Assessment</h2>
+      <p>Answer honestly — there are no right or wrong answers.</p>
+    </div>
+
+    <div id="quiz-area">
+      <div class="progress-bar-wrap">
+        <div class="progress-bar" id="quiz-progress" style="width: 0%"></div>
+      </div>
+      <div class="card" id="quiz-card">
+        <p class="quiz-q-label" id="quiz-q-num">Question 1 of 12</p>
+        <p class="quiz-question" id="quiz-question-text">Loading...</p>
+        <div class="options-grid" id="quiz-options"></div>
+        <div class="quiz-nav">
+          <button class="btn btn-outline btn-sm" id="quiz-prev-btn" onclick="quizPrev()" style="display:none">←
+            Previous</button>
+          <span class="q-counter" id="quiz-counter">1 / 12</span>
+          <button class="btn btn-primary btn-sm" id="quiz-next-btn" onclick="quizNext()">Next →</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="quiz-result" style="display:none">
+      <div class="result-card fade-in" id="result-content"></div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION: CHATBOT ===== -->
+  <section class="section" id="page-chat">
+    <div class="section-header">
+      <h2>💬 Chat Support</h2>
+      <p>Talk to Mira, your AI support companion. She's here to listen.</p>
+    </div>
+    <div class="chat-wrap">
+      <div class="chat-header">
+        <div class="chat-avatar">🌸</div>
+        <div class="chat-header-info">
+          <h3>Mira</h3>
+          <p><span class="chat-online-dot"></span>Online — Supportive AI Companion</p>
+        </div>
+      </div>
+      <div class="chat-messages" id="chat-messages">
+        <!-- Messages injected via JS -->
+      </div>
+      <div class="chat-input-area">
+        <input class="chat-input" id="chat-input" type="text" placeholder="Type how you're feeling…"
+          onkeydown="if(event.key==='Enter') sendChat()" />
+        <button class="chat-send" onclick="sendChat()">➤</button>
+      </div>
+    </div>
+    <p class="chat-disclaimer">⚠️ This chatbot is for emotional support only and is not a licensed therapist. If you are
+      in crisis, please contact a professional immediately.</p>
+  </section>
+
+  <!-- ===== SECTION: THERAPISTS ===== -->
+  <section class="section" id="page-therapists">
+    <div class="section-header">
+      <h2>👩‍⚕️ Connect with a Therapist</h2>
+      <p>Verified mental health professionals ready to help you.</p>
+    </div>
+    <div class="therapist-grid" id="therapist-grid"></div>
+    <div class="find-center-card">
+      <h3>📍 Find Nearest Mental Health Centers</h3>
+      <p>Locate accredited mental health support centers near your location.</p>
+      <button class="btn btn-primary"
+        onclick="showToast('📍 Location feature coming soon. Please visit iCall or NIMHANS for center directories.')">
+        📍 Find Near Me
+      </button>
+    </div>
+  </section>
+
+  <!-- ===== SECTION: WELLNESS ===== -->
+  <section class="section" id="page-wellness">
+    <div class="section-header">
+      <h2>🌈 Wellness Hub</h2>
+      <p>Daily practices and tools to nurture your mental health.</p>
+    </div>
+
+    <!-- Mood Tracker -->
+    <div class="mood-tracker-card">
+      <p class="card-title">😊 Daily Mood Tracker</p>
+      <p style="color:var(--text-muted);font-size:0.9rem;">How are you feeling right now?</p>
+      <div class="mood-buttons">
+        <button class="mood-btn happy" onclick="trackMood('happy', this)">
+          <span class="mood-emoji">😊</span>
+          <span class="mood-label">Happy</span>
+        </button>
+        <button class="mood-btn neutral" onclick="trackMood('neutral', this)">
+          <span class="mood-emoji">😐</span>
+          <span class="mood-label">Neutral</span>
+        </button>
+        <button class="mood-btn sad" onclick="trackMood('sad', this)">
+          <span class="mood-emoji">😔</span>
+          <span class="mood-label">Sad</span>
+        </button>
+      </div>
+      <div class="mood-history" id="mood-history" style="display:none">
+        <p class="mood-history-title">Today's mood log</p>
+        <div class="mood-dots" id="mood-dots"></div>
+      </div>
+    </div>
+
+    <!-- Self-Help Tips -->
+    <h3 style="font-size:1.2rem;font-weight:700;margin-bottom:1.2rem;color:var(--text)">🌟 Self-Help Practices</h3>
+    <div class="tips-grid">
+      <!-- Breathing -->
+      <div class="tip-card">
+        <div class="tip-icon">🫁</div>
+        <div class="tip-title">4-7-8 Breathing</div>
+        <div class="tip-desc">A proven technique to calm your nervous system in minutes. Tap the circle to begin.</div>
+        <div class="breathing-circle" id="breathe-circle" onclick="startBreathing()">Tap to<br>Start</div>
+        <p id="breathe-status" style="text-align:center;font-size:0.85rem;color:var(--text-muted);margin-top:8px"></p>
+      </div>
+      <!-- Meditation -->
+      <div class="tip-card">
+        <div class="tip-icon">🧘</div>
+        <div class="tip-title">5-Minute Meditation</div>
+        <div class="tip-desc">Ground yourself with this simple mindfulness routine.</div>
+        <ul style="font-size:0.88rem;color:var(--text-muted);line-height:2;list-style:none;padding:0">
+          <li>🌿 Sit comfortably, close your eyes</li>
+          <li>🌬️ Breathe in slowly through your nose</li>
+          <li>🌊 Notice thoughts, then let them pass</li>
+          <li>❤️ Focus on the present moment</li>
+          <li>⏱️ Repeat for 5 minutes daily</li>
+        </ul>
+      </div>
+      <!-- Stress Tips -->
+      <div class="tip-card">
+        <div class="tip-icon">💡</div>
+        <div class="tip-title">Stress Management</div>
+        <div class="tip-desc">Evidence-based strategies to reduce everyday stress.</div>
+        <ul style="font-size:0.88rem;color:var(--text-muted);line-height:2;list-style:none;padding:0">
+          <li>🚶 Take a 10-minute walk outside</li>
+          <li>📓 Journal your thoughts each morning</li>
+          <li>📵 Limit screen time before bed</li>
+          <li>🎵 Listen to calming music</li>
+          <li>🤝 Talk to someone you trust</li>
+        </ul>
+      </div>
+      <!-- Sleep -->
+      <div class="tip-card">
+        <div class="tip-icon">🌙</div>
+        <div class="tip-title">Better Sleep Hygiene</div>
+        <div class="tip-desc">Quality sleep is foundational to mental health.</div>
+        <ul style="font-size:0.88rem;color:var(--text-muted);line-height:2;list-style:none;padding:0">
+          <li>🕙 Keep a consistent sleep schedule</li>
+          <li>🌡️ Keep your room cool and dark</li>
+          <li>☕ Avoid caffeine after 2 PM</li>
+          <li>📖 Read instead of scrolling</li>
+          <li>🧘 Relax with a body scan before sleep</li>
+        </ul>
+      </div>
+      <!-- Affirmations -->
+      <div class="tip-card">
+        <div class="tip-icon">✨</div>
+        <div class="tip-title">Daily Affirmation</div>
+        <div class="tip-desc">Start your day with a positive thought. Tap for a new one.</div>
+        <div
+          style="background:var(--primary-light);border-radius:var(--radius-sm);padding:1rem;text-align:center;font-style:italic;color:var(--primary-dark);font-size:0.95rem;line-height:1.6;margin:0.8rem 0"
+          id="affirmation-text">
+          "I am enough, and I am worthy of care and kindness."
+        </div>
+        <button class="btn btn-outline btn-sm btn-full" onclick="newAffirmation()">✨ New Affirmation</button>
+      </div>
+      <!-- Gratitude -->
+      <div class="tip-card">
+        <div class="tip-icon">🙏</div>
+        <div class="tip-title">Gratitude Practice</div>
+        <div class="tip-desc">Write three things you're grateful for today.</div>
+        <textarea class="form-input" id="gratitude-input" rows="3" placeholder="I am grateful for…"
+          style="resize:vertical;border-radius:var(--radius-sm);margin-bottom:8px"></textarea>
+        <button class="btn btn-accent btn-sm btn-full" onclick="saveGratitude()">Save ✓</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION: EMERGENCY ===== -->
+  <section class="section" id="page-emergency">
+    <div class="emergency-hero">
+      <h2>🆘 You Are Not Alone</h2>
+      <p>If you are in distress or feeling unsafe, please reach out immediately. Help is available 24/7.</p>
+      <button class="btn btn-danger" onclick="callEmergency()">📞 Call Emergency Services — 112</button>
+    </div>
+
+    <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;color:var(--text)">📞 Mental Health Helplines (India)
+    </h3>
+    <div class="helpline-grid" id="helpline-grid"></div>
+
+    <div class="crisis-tips">
+      <h3>🤝 What to Do Right Now</h3>
+      <div class="crisis-tip-item">
+        <div class="crisis-tip-num">1</div>
+        <p>Tell someone you trust how you're feeling — a friend, family member, or colleague.</p>
+      </div>
+      <div class="crisis-tip-item">
+        <div class="crisis-tip-num">2</div>
+        <p>Move to a safe, calm space. Sit down, take a few deep breaths.</p>
+      </div>
+      <div class="crisis-tip-item">
+        <div class="crisis-tip-num">3</div>
+        <p>Call a helpline — trained counselors are available 24/7 and are non-judgmental.</p>
+      </div>
+      <div class="crisis-tip-item">
+        <div class="crisis-tip-num">4</div>
+        <p>If in immediate danger, call 112 or go to the nearest hospital emergency.</p>
+      </div>
+      <div class="crisis-tip-item">
+        <div class="crisis-tip-num">5</div>
+        <p>Remove yourself from anything harmful in your environment.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TOAST ===== -->
+  <div class="toast" id="toast"></div>
+
+  <!-- ===== JAVASCRIPT ===== -->
+  <script>
+    /* ======== STATE ======== */
+    const state = {
+      user: {},
+      quizIndex: 0,
+      quizAnswers: [],
+      breathingTimer: null,
+      breathingPhase: null,
+      moodLog: [],
+      chatHistory: []
+    };
+
+    /* ======== NAVIGATION ======== */
+    function navigate(page) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      const target = document.getElementById('page-' + page);
+      if (target) { target.classList.add('active', 'fade-in'); }
+      document.querySelectorAll('.nav-links a').forEach(a => {
+        a.classList.toggle('active', a.dataset.page === page);
+      });
+      window.scrollTo(0, 0);
+      if (document.getElementById('navLinks').classList.contains('open')) toggleMenu();
+    }
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('open');
+    }
+
+    /* ======== ONBOARDING ======== */
+    function submitOnboarding() {
+      const age = document.getElementById('age').value;
+      const gender = document.getElementById('gender').value;
+      const profession = document.getElementById('profession').value;
+      if (!age || !gender || !profession) {
+        showToast('Please fill in all fields to continue.');
+        return;
+      }
+      state.user = { age, gender, profession };
+      showToast('Welcome, ' + profession + '! 🌟 Let\'s begin.');
+      setTimeout(() => navigate('quiz'), 600);
+    }
+
+    /* ======== QUIZ DATA ======== */
+    const quizQuestions = [
+      { q: "How often have you felt overwhelmed by your responsibilities?", cat: "stress" },
+      { q: "How often have you felt nervous, anxious, or on edge?", cat: "anxiety" },
+      { q: "How often have you had difficulty relaxing even when you had free time?", cat: "anxiety" },
+      { q: "How often have you felt down, hopeless, or had little interest in things?", cat: "mood" },
+      { q: "How often have you had trouble falling or staying asleep?", cat: "sleep" },
+      { q: "How often have you felt more tired or fatigued than usual?", cat: "mood" },
+      { q: "How often have you felt difficulty concentrating on tasks?", cat: "stress" },
+      { q: "How often have you felt irritable or easily frustrated?", cat: "mood" },
+      { q: "How often have you felt unmotivated to do things you usually enjoy?", cat: "motivation" },
+      { q: "How often have you avoided social situations or withdrawn from people?", cat: "anxiety" },
+      { q: "How often have you experienced headaches, stomachaches, or physical tension?", cat: "stress" },
+      { q: "How often have you had racing or uncontrollable worrying thoughts?", cat: "anxiety" }
+    ];
+    const options = [
+      { label: "Not at all", score: 0 },
+      { label: "Sometimes", score: 1 },
+      { label: "Often", score: 2 },
+      { label: "Nearly every day", score: 3 }
+    ];
+    state.quizAnswers = new Array(quizQuestions.length).fill(null);
+
+    function renderQuestion() {
+      const i = state.quizIndex;
+      const q = quizQuestions[i];
+      const total = quizQuestions.length;
+      document.getElementById('quiz-q-num').textContent = 'Question ' + (i + 1) + ' of ' + total;
+      document.getElementById('quiz-question-text').textContent = q.q;
+      document.getElementById('quiz-counter').textContent = (i + 1) + ' / ' + total;
+      document.getElementById('quiz-progress').style.width = ((i + 1) / total * 100).toFixed(0) + '%';
+      document.getElementById('quiz-prev-btn').style.display = i === 0 ? 'none' : '';
+      document.getElementById('quiz-next-btn').textContent = i === total - 1 ? 'Submit ✓' : 'Next →';
+
+      const grid = document.getElementById('quiz-options');
+      grid.innerHTML = '';
+      options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn' + (state.quizAnswers[i] === idx ? ' selected' : '');
+        btn.innerHTML = '<span class="option-bullet"></span>' + opt.label;
+        btn.onclick = () => {
+          document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          state.quizAnswers[i] = idx;
+        };
+        grid.appendChild(btn);
+      });
+    }
+
+    function quizNext() {
+      if (state.quizAnswers[state.quizIndex] === null) {
+        showToast('Please select an answer before continuing.');
+        return;
+      }
+      if (state.quizIndex < quizQuestions.length - 1) {
+        state.quizIndex++;
+        renderQuestion();
+      } else {
+        showResult();
+      }
+    }
+    function quizPrev() {
+      if (state.quizIndex > 0) { state.quizIndex--; renderQuestion(); }
+    }
+
+    function showResult() {
+      const total = state.quizAnswers.reduce((sum, val) => sum + (val !== null ? options[val].score : 0), 0);
+      const max = quizQuestions.length * 3;
+      const pct = (total / max) * 100;
+
+      let emoji, title, desc, badgeClass, badgeText, color;
+      if (pct < 30) {
+        emoji = '😊'; title = 'You seem mentally stable';
+        desc = 'Your responses suggest you are managing your mental well-being well. Keep practicing self-care and healthy habits!';
+        badgeClass = 'badge-good'; badgeText = 'Score: ' + total + ' / ' + max + ' — Low Concern';
+        color = '#276749';
+      } else if (pct < 60) {
+        emoji = '😐'; title = 'You may be experiencing moderate stress';
+        desc = 'You show some signs of stress or emotional fatigue. Consider speaking with a trusted friend, practicing mindfulness, or consulting a counselor.';
+        badgeClass = 'badge-moderate'; badgeText = 'Score: ' + total + ' / ' + max + ' — Moderate';
+        color = '#8A5E0A';
+      } else {
+        emoji = '💙'; title = 'You may be experiencing signs of anxiety or low mood';
+        desc = 'Your responses suggest you might be going through a difficult time. It\'s important to reach out to a professional. You are not alone, and help is available.';
+        badgeClass = 'badge-concern'; badgeText = 'Score: ' + total + ' / ' + max + ' — Higher Concern';
+        color = '#C53030';
+      }
+
+      document.getElementById('quiz-area').style.display = 'none';
+      document.getElementById('quiz-result').style.display = 'block';
+      document.getElementById('result-content').innerHTML = `
+    <div class="result-emoji">${emoji}</div>
+    <div class="result-title" style="color:${color}">${title}</div>
+    <div class="result-desc">${desc}</div>
+    <div class="result-score-badge ${badgeClass}">${badgeText}</div>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:0.5rem">
+      <button class="btn btn-primary btn-sm" onclick="navigate('chat')">💬 Talk to Mira</button>
+      <button class="btn btn-accent btn-sm" onclick="navigate('therapists')">👩‍⚕️ Find a Therapist</button>
+      <button class="btn btn-outline btn-sm" onclick="retakeQuiz()">🔄 Retake Quiz</button>
+    </div>
+    <div class="result-disclaimer">
+      ⚠️ <strong>Important:</strong> This is <strong>not a medical diagnosis</strong>. This assessment is for informational and self-awareness purposes only. Please consult a qualified mental health professional if you have concerns about your mental health.
+    </div>
+  `;
+    }
+    function retakeQuiz() {
+      state.quizIndex = 0;
+      state.quizAnswers = new Array(quizQuestions.length).fill(null);
+      document.getElementById('quiz-area').style.display = 'block';
+      document.getElementById('quiz-result').style.display = 'none';
+      renderQuestion();
+    }
+
+    /* ======== CHATBOT ======== */
+    const botResponses = {
+      greet: ["Hi there! 🌸 I'm Mira. How are you feeling today?", "Hello! I'm here to listen. What's on your mind?", "Hey! It's good to have you here. How's your day going?"],
+      sad: ["I'm really sorry to hear you're feeling this way. 💙 Can you tell me more about what's going on?", "It's okay to feel sad. You don't have to go through this alone. I'm here.", "Thank you for sharing that with me. Your feelings are valid. What do you think is making you feel this way?"],
+      anxious: ["Anxiety can feel really overwhelming. 🌬️ Try taking a slow deep breath with me. Breathe in… and out…", "I understand how unsettling anxiety can be. What's been worrying you most lately?", "You're being really brave by talking about this. Let's take it one step at a time."],
+      stressed: ["That sounds really stressful. 😔 It's okay to feel overwhelmed sometimes. What's putting the most pressure on you?", "Stress can pile up quickly. Is there anything specific that's been weighing on you?", "I hear you. Remember — it's okay to take a break and breathe."],
+      happy: ["That's wonderful to hear! 🌟 What's been making you feel good?", "I love that! Keep holding onto that feeling. 😊", "It's so great that you're feeling well. Celebrating small wins matters!"],
+      default: [
+        "I understand how you feel. Do you want to talk more about it?",
+        "Thank you for sharing that with me. It takes courage. 💙",
+        "It's okay to feel this way. You are not alone.",
+        "I'm here for you. What would help you most right now?",
+        "That makes a lot of sense. Would you like to explore that feeling more?",
+        "You're doing the right thing by talking about it. How long have you felt this way?",
+        "I appreciate you opening up. Have you spoken to anyone else about this?",
+        "Remember — it's okay to not be okay. Taking small steps is still progress. 🌱"
+      ]
+    };
+
+    function getBot(text) {
+      const t = text.toLowerCase();
+      if (/\b(hi|hello|hey|hiya|good morning|good evening)\b/.test(t)) return pick(botResponses.greet);
+      if (/\b(sad|crying|cry|unhappy|depressed|depression|hopeless|empty)\b/.test(t)) return pick(botResponses.sad);
+      if (/\b(anxious|anxiety|panic|nervous|scared|fear|worry|worried)\b/.test(t)) return pick(botResponses.anxious);
+      if (/\b(stress|stressed|overwhelm|pressure|burden|exhausted|tired|burnout)\b/.test(t)) return pick(botResponses.stressed);
+      if (/\b(happy|great|good|awesome|better|wonderful|fine|well)\b/.test(t)) return pick(botResponses.happy);
+      return pick(botResponses.default);
+    }
+    function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+    function addMsg(text, type) {
+      const box = document.getElementById('chat-messages');
+      const now = new Date();
+      const time = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+      const div = document.createElement('div');
+      div.className = 'msg ' + type;
+      div.innerHTML = '<div class="msg-bubble">' + text + '</div><div class="msg-time">' + time + '</div>';
+      box.appendChild(div);
+      box.scrollTop = box.scrollHeight;
+    }
+    function showTyping() {
+      const box = document.getElementById('chat-messages');
+      const div = document.createElement('div');
+      div.className = 'msg bot'; div.id = 'typing-indicator';
+      div.innerHTML = '<div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
+      box.appendChild(div);
+      box.scrollTop = box.scrollHeight;
+    }
+    function removeTyping() {
+      const t = document.getElementById('typing-indicator');
+      if (t) t.remove();
+    }
+
+    function sendChat() {
+      const input = document.getElementById('chat-input');
+      const text = input.value.trim();
+      if (!text) return;
+      addMsg(text, 'user');
+      input.value = '';
+      showTyping();
+      setTimeout(() => {
+        removeTyping();
+        addMsg(getBot(text), 'bot');
+      }, 900 + Math.random() * 600);
+    }
+
+    function initChat() {
+      const box = document.getElementById('chat-messages');
+      box.innerHTML = '';
+      setTimeout(() => addMsg("Hi there! 🌸 I'm Mira, your supportive companion. I'm here to listen — no judgment, just care. How are you feeling today?", 'bot'), 400);
+    }
+
+    /* ======== THERAPISTS ======== */
+    const therapists = [
+      { name: "Dr. Priya Sharma", spec: "Anxiety & Depression", exp: "12 years experience", rating: "⭐⭐⭐⭐⭐", color: "#5B8DB8", initials: "PS" },
+      { name: "Dr. Rajan Mehta", spec: "Trauma & PTSD", exp: "9 years experience", rating: "⭐⭐⭐⭐⭐", color: "#6DBF8E", initials: "RM" },
+      { name: "Dr. Aanya Kapoor", spec: "Stress & Burnout", exp: "7 years experience", rating: "⭐⭐⭐⭐", color: "#F9A8D4", initials: "AK" },
+      { name: "Dr. Vikram Iyer", spec: "Relationships & Grief", exp: "15 years experience", rating: "⭐⭐⭐⭐⭐", color: "#F9C784", initials: "VI" },
+      { name: "Dr. Sunita Rao", spec: "Child & Adolescent", exp: "11 years experience", rating: "⭐⭐⭐⭐⭐", color: "#A78BFA", initials: "SR" }
+    ];
+    function renderTherapists() {
+      const grid = document.getElementById('therapist-grid');
+      grid.innerHTML = therapists.map(t => `
+    <div class="therapist-card">
+      <div class="therapist-avatar" style="background:${t.color}">${t.initials}</div>
+      <div class="therapist-name">${t.name}</div>
+      <div class="therapist-spec">${t.spec}</div>
+      <div class="therapist-exp">🎓 ${t.exp}</div>
+      <div class="therapist-rating">${t.rating}</div>
+      <div class="therapist-btns">
+        <button class="btn btn-primary btn-sm" onclick="showToast('📅 Booking call with ${t.name}…')">📞 Book Call</button>
+        <button class="btn btn-outline btn-sm" onclick="showToast('🎥 Video session with ${t.name} requested!')">🎥 Video Session</button>
+      </div>
+    </div>
+  `).join('');
+    }
+
+    /* ======== HELPLINES ======== */
+    const helplines = [
+      { name: "iCall (TISS)", number: "9152987821", desc: "Professional counseling by trained psychologists" },
+      { name: "Vandrevala Foundation", number: "1860-2662-345", desc: "24/7 mental health support line" },
+      { name: "Snehi", number: "044-24640050", desc: "Emotional support and crisis intervention" },
+      { name: "AASRA", number: "9820466627", desc: "Crisis counseling and suicide prevention" },
+      { name: "iHeal", number: "9152987821", desc: "Support for youth and young adults" },
+      { name: "NIMHANS", number: "080-46110007", desc: "National Institute of Mental Health helpdesk" }
+    ];
+    function renderHelplines() {
+      document.getElementById('helpline-grid').innerHTML = helplines.map(h => `
+    <div class="helpline-card">
+      <div class="helpline-name">${h.name}</div>
+      <div class="helpline-number">📞 ${h.number}</div>
+      <div class="helpline-desc">${h.desc}</div>
+    </div>
+  `).join('');
+    }
+
+    /* ======== MOOD TRACKER ======== */
+    const moodEmojis = { happy: '😊', neutral: '😐', sad: '😔' };
+    const moodColors = { happy: '#68D391', neutral: '#F9C784', sad: '#FC8181' };
+    function trackMood(mood, btn) {
+      document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected', 'happy', 'neutral', 'sad'));
+      btn.classList.add('selected', mood);
+      state.moodLog.push({ mood, time: new Date() });
+      renderMoodHistory();
+      showToast('Mood logged: ' + moodEmojis[mood] + ' ' + mood);
+    }
+    function renderMoodHistory() {
+      if (state.moodLog.length === 0) return;
+      document.getElementById('mood-history').style.display = 'block';
+      document.getElementById('mood-dots').innerHTML = state.moodLog.slice(-14).map(m =>
+        `<div class="mood-dot" style="background:${moodColors[m.mood]}" title="${m.mood}">${moodEmojis[m.mood]}</div>`
+      ).join('');
+    }
+
+    /* ======== BREATHING ======== */
+    const breathingSeq = [
+      { phase: 'inhale', label: 'Breathe In…', duration: 4000 },
+      { phase: 'hold', label: 'Hold…', duration: 7000 },
+      { phase: 'exhale', label: 'Breathe Out…', duration: 8000 }
+    ];
+    let breathIdx = 0, breathActive = false;
+    function startBreathing() {
+      if (breathActive) {
+        breathActive = false;
+        clearTimeout(state.breathingTimer);
+        const circle = document.getElementById('breathe-circle');
+        circle.className = 'breathing-circle';
+        circle.innerHTML = 'Tap to<br>Start';
+        document.getElementById('breathe-status').textContent = 'Session ended. Well done! 🌿';
+        return;
+      }
+      breathActive = true; breathIdx = 0;
+      runBreath();
+    }
+    function runBreath() {
+      if (!breathActive) return;
+      const step = breathingSeq[breathIdx % 3];
+      const circle = document.getElementById('breathe-circle');
+      circle.className = 'breathing-circle ' + step.phase;
+      circle.textContent = step.label;
+      document.getElementById('breathe-status').textContent = 'Cycle ' + (Math.floor(breathIdx / 3) + 1) + ' — Tap to stop';
+      breathIdx++;
+      state.breathingTimer = setTimeout(runBreath, step.duration);
+    }
+
+    /* ======== AFFIRMATIONS ======== */
+    const affirmations = [
+      '"I am enough, and I am worthy of care and kindness."',
+      '"Every day I am growing stronger, even on hard days."',
+      '"I give myself permission to heal at my own pace."',
+      '"My feelings are valid, and I choose to honor them."',
+      '"I am not alone — support is always available to me."',
+      '"I deserve happiness, peace, and good mental health."',
+      '"I choose to be gentle with myself today."',
+      '"Small steps forward are still progress worth celebrating."',
+      '"I am resilient. I have overcome challenges before."',
+      '"Today I will breathe, and that is enough."'
+    ];
+    let affirmIdx = 0;
+    function newAffirmation() {
+      affirmIdx = (affirmIdx + 1) % affirmations.length;
+      document.getElementById('affirmation-text').textContent = affirmations[affirmIdx];
+    }
+    function saveGratitude() {
+      const val = document.getElementById('gratitude-input').value.trim();
+      if (!val) { showToast('Please write something you\'re grateful for.'); return; }
+      showToast('🙏 Gratitude saved! Keep nurturing that mindset.');
+      document.getElementById('gratitude-input').value = '';
+    }
+
+    /* ======== TOAST ======== */
+    let toastTimer;
+    function showToast(msg) {
+      clearTimeout(toastTimer);
+      const t = document.getElementById('toast');
+      t.textContent = msg; t.style.display = 'block';
+      toastTimer = setTimeout(() => { t.style.display = 'none'; }, 3200);
+    }
+
+    /* ======== EMERGENCY ======== */
+    function callEmergency() {
+      showToast('🆘 Dialing 112 — In a real emergency, please call now!');
+    }
+
+    /* ======== INIT ======== */
+    renderQuestion();
+    renderTherapists();
+    renderHelplines();
+    initChat();
+  </script>
+</body>
+
+</html>
